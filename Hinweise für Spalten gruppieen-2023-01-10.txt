@@ -1,0 +1,37 @@
+Es gibt einen DataFrame ega_neu mit Spalten.
+Diesen mächte ich nach der Gruppierung der Spalten in ein Excel-File xlsfile speichern
+
+# Excel-Datei öffnen
+wb = openpyxl.load_workbook(xlsfile)
+
+# Arbeitsblatt auswählen
+ws = wb[wb.sheetnames[0]]
+
+DataFrame: "ega_neu" 
+print(ega_neu.columns)
+
+Index(['Project', 'Baseline', 'Type', 'Hierarchy #', 'Section', 'Chapter', 'Function', 'Hazard', 'Cause', 'Measure', 'ID', 'Entry Type', 'Hazard Type', 'RequireKey', 'Requirement', 'Description', 'Status', 'Priority', 'Owner', 'Owner (First Name)', 'Owner (Last Name)', 'Created By', 'Responsible', 'Registered Interest', 'Created On', 'Last Modified On', 'Modified By', 'Source', 'Charm', 'Open Points', 'S1 Subsystem', 'Hazard Remark', 'Harm', 'AFAP justification', 'Kano Ranking', 'Test Level', 'Rearrange Operation', 'Rearrange Reason', 'Initial Risk Assessment', 'Residual Risk Assessment', 'Validation Procedure State', 'New', 'Export', 'Level of Requirements', 'Level of Test', 'Usability', 'Domain', 'Applicable Generic Hazard', 'Hazard Effect To', 'System S1', 'Target Release S1', 'System IGS-Platform', 'Target Release IGS-Platform', 'System PreOPlan', 'Target Release PreOPlan', 'System ISS', 'IGS-Platform Subsystem', 'Target Release ISS', 'System S3', 'Target Release S3', 'S3 Subsystem', 'System NavSim', 'Target Release NavSim', 'Traced System', 'P1 before', 'P2 before', 'P1 after', 'Polarion Migration'], dtype='object')
+
+Ich habe eine Liste mit bestimmten ausgewählten Spalten:
+# Liste der Spalten, die gruppiert werden sollen
+columns_to_group = ['Section', 'Chapter', 'Function', 'Hazard', 'Cause', 'Measure', 'Owner (First Name)', 'Owner (Last Name)', 'Created By', 'Responsible', 'Registered Interest', 'Created On', 'Source', 'Charm', 'Open Points', 'Kano Ranking']
+
+Die Liste ist von Fall zu Fall verschieden, je nachdem ob ich mehr oder weniger Spalten gruppieren und ausblenden möchte.
+Diese möchte ich deshalb gruppieren, damit ich sie im Excel-File jederzeit aus- oder einblenden kann.
+
+Sie Python SW soll nun ermitteln, ob die aufgezählten Spalten von columns_to_group in ega_neu aufeinander folgen. Dann können diese zu einer Gruppe zusammengefasst werden.
+Im Beispiel kommen in die erste Gruppe die Spalten Section - Chapter. Danach folgt folgt in ega_neu die Spalte ID. Diese ist nicht in columns_to_group, ergo ist die erste Gruppe zu ende.
+In die nächste Gruppe: 'Owner (First Name)', 'Owner (Last Name)', 'Created By', 'Responsible', 'Registered Interest', 'Created On'. Danach folgt 'Last Modified on', was wiederum nicht in columns_to_group ist, womit die 2. Gruppe endet.
+In der 3. Gruppe: 'Source', 'Charm', 'Open Points'
+Und die 4. Gruppe nur 'Kano Ranking'
+
+Die Guppen enden immer da, wo es Spalten in ega_neu gibt, die nicht guppiert werden sollen. 
+Die nächste Gruppe beginnnt mit dem nächsten Element in columns_to_group und endet wieder, sobald ein Element in columns_to_group nicht unmmittelbar an das vorherige in ega_neu anschließt.
+
+ 
+
+
+
+
+
+
